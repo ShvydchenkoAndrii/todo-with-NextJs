@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ToDo() {
-  // const startState = {
-  //   items: [
-  //     { title: "1", completed: false },
-  //     { title: "2", completed: false },
-  //     { title: "3", completed: false },
-  //   ],
-  // };
   const [state, setState] = useState({ items: [], filter: "all" });
+
+  useEffect(() => {
+    const loadedState = JSON.parse(localStorage.getItem("ToDo"));
+    if (loadedState) {
+      setState(loadedState);
+    }
+  }, []);
 
   const handlerAddButt = () => {
     let inputTxt = document.getElementById("textInp").value;
@@ -23,34 +23,70 @@ export default function ToDo() {
     inputTxt = document.getElementById("textInp").value = "";
   };
 
+  const handletToggleCompleted = (id) => {
+    const itemIdx = state.items.findIndex((item) => item.id === id);
+    state.items[itemIdx].completed = !state.items[itemIdx].completed;
+    setState({ ...state, items: state.items });
+  };
+
   const handlerDeleteButt = (id) => {
     const itemIdx = state.items.findIndex((item) => item.id === id);
     state.items.splice(itemIdx, 1);
     setState({ items: state.items });
   };
 
-  const list = state.items.map((item) => {
+  const handlerAllButt = () => {
+    setState({ ...state, filter: "all" });
+  };
+  const handlerCompletedButt = () => {
+    setState({ ...state, filter: "Completed" });
+  };
+  const handlerInProgressButt = () => {
+    setState({ ...state, filter: "In progress" });
+  };
+  const handlerClearButt = () => {
+    setState({ items: [], filter: "all" });
+    localStorage.clear();
+  };
+
+  const filterResult = state.items.filter((item) => {
+    if (state.filter === "all") {
+      return item;
+    }
+    if (state.filter === "Completed") {
+      return item.completed === true;
+    }
+    if (state.filter === "In progress") {
+      return item.completed === false;
+    }
+  });
+
+  const list = filterResult.map((item) => {
     return (
       <div key={item.id}>
         <input
           type="checkbox"
-          // checked={item.completed === true ? "checked" : null}
+          onChange={() => handletToggleCompleted(item.id)}
+          checked={item.completed !== false ? "checked" : null}
         ></input>
         <p>{item.title}</p>
         <button onClick={() => handlerDeleteButt(item.id)}>Delete</button>
       </div>
     );
   });
+
+  console.log(state);
+
   return (
     <div>
       <input typeof="text" id="textInp"></input>
       <button onClick={() => handlerAddButt()}>Add</button>
-      <ul>{list}</ul>
+      {state.items.length !== 0 ? <ul>{list}</ul> : null}
       <div>{state.items.length}</div>
-      <button>All</button>
-      <button>Completed</button>
-      <button>In progress</button>
-      <button>Clear</button>
+      <button onClick={() => handlerAllButt()}>All</button>
+      <button onClick={() => handlerCompletedButt()}>Completed</button>
+      <button onClick={() => handlerInProgressButt()}>In progress</button>
+      <button onClick={() => handlerClearButt()}>Clear</button>
     </div>
   );
 }
