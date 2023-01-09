@@ -3,13 +3,6 @@ import { useEffect, useState } from "react";
 export default function ToDo() {
   const [state, setState] = useState({ items: [], filter: "all" });
 
-  useEffect(() => {
-    const loadedState = JSON.parse(localStorage.getItem("ToDo"));
-    if (loadedState) {
-      setState(loadedState);
-    }
-  }, []);
-
   const handlerAddButt = () => {
     let inputTxt = document.getElementById("textInp").value;
     const newItem = {
@@ -75,7 +68,16 @@ export default function ToDo() {
     );
   });
 
-  console.log(state);
+  useEffect(() => {
+    const loadedState = JSON.parse(localStorage.getItem("ToDo"));
+    if (loadedState) {
+      setState(loadedState);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("ToDo", JSON.stringify(state));
+  }, [state]);
 
   return (
     <div>
