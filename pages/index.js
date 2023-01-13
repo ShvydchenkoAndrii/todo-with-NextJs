@@ -57,7 +57,7 @@ export default function ToDo() {
 
   const list = filterResult.map((item) => {
     return (
-      <div key={item.id}>
+      <div key={item.id} className="flex flex-row gap-10 border border-opacity-20">
         <input
           type="checkbox"
           onChange={() => handletToggleCompleted(item.id)}
@@ -68,6 +68,19 @@ export default function ToDo() {
       </div>
     );
   });
+
+  const filters = (
+    <>
+      <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
+      <div className="flex flex-row gap-10">
+        <div>{state.items.length}</div>
+        <button onClick={() => handlerAllButt()}>All</button>
+        <button onClick={() => handlerCompletedButt()}>Completed</button>
+        <button onClick={() => handlerInProgressButt()}>In progress</button>
+        <button onClick={() => handlerClearButt()}>Clear</button>
+      </div>
+    </>
+  );
 
   useEffect(() => {
     const loadedState = JSON.parse(localStorage.getItem("ToDo"));
@@ -81,25 +94,26 @@ export default function ToDo() {
   }, [state]);
 
   return (
-    <div>
-      <h1>ToDoList with ReactJS & Tailwind</h1>
-      <input
-        typeof="text"
-        id="textInp"
-        ref={txtInput}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            handlerAddButt();
-          }
-        }}
-      ></input>
-      <button onClick={() => handlerAddButt()}>Add</button>
-      {state.items.length !== 0 ? <ul>{list}</ul> : null}
-      <div>{state.items.length}</div>
-      <button onClick={() => handlerAllButt()}>All</button>
-      <button onClick={() => handlerCompletedButt()}>Completed</button>
-      <button onClick={() => handlerInProgressButt()}>In progress</button>
-      <button onClick={() => handlerClearButt()}>Clear</button>
+    <div className="flex flex-col  items-center gap-10 py-5 ">
+      <div>
+        <h1 className="text-h1 text-8xl">ToDoList</h1>
+      </div>
+      <div className="bg-white">
+        <input
+          className="placeholder:italic placeholder:text-slate-400 placeholder:text-2xl p-4 pl-16 shadow-lg focus:outline-0 "
+          typeof="text"
+          size={65}
+          id="textInp"
+          ref={txtInput}
+          placeholder="What needs to be done ?"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handlerAddButt();
+            }
+          }}
+        ></input>
+        {state.items.length > 0 ? filters : null}
+      </div>
     </div>
   );
 }
