@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ToDo() {
   const [state, setState] = useState({ items: [], filter: "all" });
+  const txtInput = useRef(null);
 
   const handlerAddButt = () => {
-    let inputTxt = document.getElementById("textInp").value;
+    let inputTxt = txtInput.current.value;
     const newItem = {
       title: inputTxt,
       completed: false,
       id: Math.ceil(Math.random() * 1000),
     };
-    newItem.title !== ""
-      ? setState({ items: state.items.concat(newItem), filter: "all" })
-      : null;
-    inputTxt = document.getElementById("textInp").value = "";
+    if (newItem.title !== "") {
+      setState({ items: state.items.concat(newItem), filter: "all" });
+    }
+    inputTxt = txtInput.current.value = "";
   };
 
   const handletToggleCompleted = (id) => {
@@ -25,7 +26,7 @@ export default function ToDo() {
   const handlerDeleteButt = (id) => {
     const itemIdx = state.items.findIndex((item) => item.id === id);
     state.items.splice(itemIdx, 1);
-    setState({ items: state.items });
+    setState({ ...state, items: state.items });
   };
 
   const handlerAllButt = () => {
@@ -81,7 +82,17 @@ export default function ToDo() {
 
   return (
     <div>
-      <input typeof="text" id="textInp"></input>
+      <h1>ToDoList with ReactJS & Tailwind</h1>
+      <input
+        typeof="text"
+        id="textInp"
+        ref={txtInput}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handlerAddButt();
+          }
+        }}
+      ></input>
       <button onClick={() => handlerAddButt()}>Add</button>
       {state.items.length !== 0 ? <ul>{list}</ul> : null}
       <div>{state.items.length}</div>
