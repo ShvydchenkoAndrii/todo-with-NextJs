@@ -57,13 +57,16 @@ export default function ToDo() {
 
   const list = filterResult.map((item) => {
     return (
-      <div key={item.id} className="flex flex-row gap-10 border border-opacity-20">
+      <div
+        key={item.id}
+        className="flex flex-row gap-10 shadow-inner p-4  justify-between flex-start"
+      >
         <input
           type="checkbox"
           onChange={() => handletToggleCompleted(item.id)}
           checked={item.completed !== false ? "checked" : null}
         ></input>
-        <p>{item.title}</p>
+        <p className="absolute pl-16">{item.title}</p>
         <button onClick={() => handlerDeleteButt(item.id)}>Delete</button>
       </div>
     );
@@ -72,12 +75,14 @@ export default function ToDo() {
   const filters = (
     <>
       <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
-      <div className="flex flex-row gap-10">
-        <div>{state.items.length}</div>
-        <button onClick={() => handlerAllButt()}>All</button>
-        <button onClick={() => handlerCompletedButt()}>Completed</button>
-        <button onClick={() => handlerInProgressButt()}>In progress</button>
-        <button onClick={() => handlerClearButt()}>Clear</button>
+      <div className="flex flex-row gap-10 border-black pl-16 p-4 justify-between">
+        <div>{state.items.length} Items</div>
+        <div className=" flex flex-row gap-5">
+          <button onClick={() => handlerAllButt()}>All</button>
+          <button onClick={() => handlerCompletedButt()}>Completed</button>
+          <button onClick={() => handlerInProgressButt()}>In progress</button>
+          <button onClick={() => handlerClearButt()}>Clear</button>
+        </div>
       </div>
     </>
   );
@@ -94,13 +99,13 @@ export default function ToDo() {
   }, [state]);
 
   return (
-    <div className="flex flex-col  items-center gap-10 py-5 ">
+    <div className="flex flex-col  items-center gap-10 py-5">
       <div>
         <h1 className="text-h1 text-8xl">ToDoList</h1>
       </div>
-      <div className="bg-white">
+      <div className="bg-white shadow-xl">
         <input
-          className="placeholder:italic placeholder:text-slate-400 placeholder:text-2xl p-4 pl-16 shadow-lg focus:outline-0 "
+          className="placeholder:italic placeholder:text-slate-400 placeholder:text-2xl p-4 pl-16 focus:outline-0 "
           typeof="text"
           size={65}
           id="textInp"
@@ -114,6 +119,7 @@ export default function ToDo() {
         ></input>
         {state.items.length > 0 ? filters : null}
       </div>
+      <div className=" bg-black w-2/3"></div>
     </div>
   );
 }
