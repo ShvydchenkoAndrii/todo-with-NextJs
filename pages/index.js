@@ -62,11 +62,11 @@ export default function ToDo() {
         className="flex flex-row gap-10 shadow-inner p-4  justify-between flex-start"
       >
         <input
+          checked={item.completed !== false ? "checked" : null}
           type="checkbox"
           onChange={() => handletToggleCompleted(item.id)}
-          checked={item.completed !== false ? "checked" : null}
         ></input>
-        <p className="absolute pl-16">{item.title}</p>
+        <p className="absolute ml-16">{item.title}</p>
         <button onClick={() => handlerDeleteButt(item.id)}>Delete</button>
       </div>
     );
@@ -75,12 +75,33 @@ export default function ToDo() {
   const filters = (
     <>
       <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
-      <div className="flex flex-row gap-10 border-black pl-16 p-4 justify-between">
-        <div>{state.items.length} Items</div>
+      <div className="flex flex-row gap-10 shadow-inner pl-16 p-4 justify-between">
+        <div>{state.items.length} items</div>
         <div className=" flex flex-row gap-5">
-          <button onClick={() => handlerAllButt()}>All</button>
-          <button onClick={() => handlerCompletedButt()}>Completed</button>
-          <button onClick={() => handlerInProgressButt()}>In progress</button>
+          <button
+            className={
+              state.filter === "all" ? "border p-2" : "hover:border p-2"
+            }
+            onClick={() => handlerAllButt()}
+          >
+            All
+          </button>
+          <button
+            className={
+              state.filter === "Completed" ? "border p-2" : "hover:border p-2"
+            }
+            onClick={() => handlerCompletedButt()}
+          >
+            Completed
+          </button>
+          <button
+            className={
+              state.filter === "In progress" ? "border p-2" : "hover:border p-2"
+            }
+            onClick={() => handlerInProgressButt()}
+          >
+            In progress
+          </button>
           <button onClick={() => handlerClearButt()}>Clear</button>
         </div>
       </div>
@@ -119,7 +140,7 @@ export default function ToDo() {
         ></input>
         {state.items.length > 0 ? filters : null}
       </div>
-      <div className=" bg-black w-2/3"></div>
+      <div className="bg-black w-2/3"></div>
     </div>
   );
 }
