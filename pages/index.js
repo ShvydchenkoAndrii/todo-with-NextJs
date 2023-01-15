@@ -59,14 +59,23 @@ export default function ToDo() {
     return (
       <div
         key={item.id}
-        className="flex flex-row gap-10 shadow-inner p-4  justify-between flex-start"
+        className="flex flex-row gap-10 shadow-inner p-4  justify-between  mt-2"
       >
         <input
+          className=""
           checked={item.completed !== false ? "checked" : null}
           type="checkbox"
           onChange={() => handletToggleCompleted(item.id)}
         ></input>
-        <p className="absolute ml-16">{item.title}</p>
+        <p
+          className={
+            item.completed
+              ? "line-through absolute ml-16 opacity-50 duration-500"
+              : "absolute ml-16 duration-500"
+          }
+        >
+          {item.title}
+        </p>
         <button onClick={() => handlerDeleteButt(item.id)}>Delete</button>
       </div>
     );
@@ -80,7 +89,9 @@ export default function ToDo() {
         <div className=" flex flex-row gap-5">
           <button
             className={
-              state.filter === "all" ? "border p-2" : "hover:border p-2"
+              state.filter === "all"
+                ? "border p-2 text-sm font-serif"
+                : "hover:border p-2 text-sm font-serif"
             }
             onClick={() => handlerAllButt()}
           >
@@ -88,7 +99,9 @@ export default function ToDo() {
           </button>
           <button
             className={
-              state.filter === "Completed" ? "border p-2" : "hover:border p-2"
+              state.filter === "Completed"
+                ? "border p-2 text-sm"
+                : "hover:border p-2 text-sm"
             }
             onClick={() => handlerCompletedButt()}
           >
@@ -96,13 +109,17 @@ export default function ToDo() {
           </button>
           <button
             className={
-              state.filter === "In progress" ? "border p-2" : "hover:border p-2"
+              state.filter === "In progress"
+                ? "border p-2 text-sm"
+                : "hover:border p-2 text-sm"
             }
             onClick={() => handlerInProgressButt()}
           >
             In progress
           </button>
-          <button onClick={() => handlerClearButt()}>Clear</button>
+          <button onClick={() => handlerClearButt()} className="text-sm">
+            Clear
+          </button>
         </div>
       </div>
     </>
@@ -120,27 +137,30 @@ export default function ToDo() {
   }, [state]);
 
   return (
-    <div className="flex flex-col  items-center gap-10 py-5">
-      <div>
-        <h1 className="text-h1 text-8xl">ToDoList</h1>
+    <>
+      <div className="flex flex-col  items-center gap-10 py-5">
+        <div>
+          <h1 className="text-h1 text-8xl">ToDoList</h1>
+        </div>
+        <div className="bg-white shadow-xl z-20">
+          <input
+            className="placeholder:italic placeholder:text-slate-400 placeholder:text-2xl p-4 pl-16 focus:outline-0 "
+            typeof="text"
+            size={65}
+            id="textInp"
+            ref={txtInput}
+            placeholder="What needs to be done ?"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handlerAddButt();
+              }
+            }}
+          ></input>
+          {state.items.length > 0 ? filters : null}
+        </div>
+        <div className="bg-black shadow-inner relative w-144 h-8 -top-16 z-10"></div>
+        <div className="bg-yellow shadow-inner relative w-128 h-8 -top-32 z-0"></div>
       </div>
-      <div className="bg-white shadow-xl">
-        <input
-          className="placeholder:italic placeholder:text-slate-400 placeholder:text-2xl p-4 pl-16 focus:outline-0 "
-          typeof="text"
-          size={65}
-          id="textInp"
-          ref={txtInput}
-          placeholder="What needs to be done ?"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handlerAddButt();
-            }
-          }}
-        ></input>
-        {state.items.length > 0 ? filters : null}
-      </div>
-      <div className="bg-black w-2/3"></div>
-    </div>
+    </>
   );
 }
