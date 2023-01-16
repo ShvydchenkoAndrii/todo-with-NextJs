@@ -57,26 +57,36 @@ export default function ToDo() {
 
   const list = filterResult.map((item) => {
     return (
-      <div
-        key={item.id}
-        className="flex flex-row gap-10 shadow-inner p-4  justify-between  mt-2"
-      >
-        <input
-          className=""
-          checked={item.completed !== false ? "checked" : null}
-          type="checkbox"
-          onChange={() => handletToggleCompleted(item.id)}
-        ></input>
-        <p
-          className={
-            item.completed
-              ? "line-through absolute ml-16 opacity-50 duration-500"
-              : "absolute ml-16 duration-500"
-          }
-        >
-          {item.title}
-        </p>
-        <button onClick={() => handlerDeleteButt(item.id)}>Delete</button>
+      <div className="border-t border-gray border-opacity-20  items-center ">
+        <div key={item.id} className="flex flex-row p-4  justify-between">
+          <div
+            className={
+              item.completed
+                ? "h-8 w-8 border-green border border-opacity-50 rounded-full flex items-center justify-center"
+                : "h-8 w-8 border-gray border border-opacity-50 rounded-full flex items-center justify-center"
+            }
+            onClick={() => handletToggleCompleted(item.id)}
+          >
+            {item.completed ? <p className="text-green text-xl">✓</p> : null}
+          </div>
+          <p
+            className={
+              item.completed
+                ? "line-through absolute ml-16 opacity-20 duration-500 font-sans text-2xl"
+                : "absolute ml-16 duration-500 font-sans text-2xl"
+            }
+          >
+            {item.title}
+          </p>
+          <div className="hover:opacity-100 opacity-0">
+            <span
+              className="font-sans text-red opacity-50 text-xl pr-7 font-extrabold hover:opacity-100 hover:duration-500 duration-500"
+              onClick={() => handlerDeleteButt(item.id)}
+            >
+              ✗
+            </span>
+          </div>
+        </div>
       </div>
     );
   });
@@ -84,14 +94,14 @@ export default function ToDo() {
   const filters = (
     <>
       <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
-      <div className="flex flex-row gap-10 shadow-inner pl-16 p-4 justify-between">
+      <div className="flex flex-row gap-10 shadow-sm border-t border-gray border-opacity-20 font-sans pl-16 p-4 justify-between">
         <div>{state.items.length} items</div>
         <div className=" flex flex-row gap-5">
           <button
             className={
               state.filter === "all"
-                ? "border p-2 text-sm font-serif"
-                : "hover:border p-2 text-sm font-serif"
+                ? "border p-2 text-sm font-sans"
+                : "hover:border p-2 text-sm font-sans"
             }
             onClick={() => handlerAllButt()}
           >
@@ -138,13 +148,13 @@ export default function ToDo() {
 
   return (
     <>
-      <div className="flex flex-col  items-center gap-10 py-5">
+      <div className="flex flex-col items-center gap-10 py-5 font-sans">
         <div>
           <h1 className="text-h1 text-8xl">ToDoList</h1>
         </div>
-        <div className="bg-white shadow-xl z-20">
+        <div className="bg-white shadow-lg border border-gray border-opacity-20">
           <input
-            className="placeholder:italic placeholder:text-slate-400 placeholder:text-2xl p-4 pl-16 focus:outline-0 "
+            className="placeholder:text-2xl placeholder:italic py-6 pl-16 focus:outline-0 font-normal placeholder:opacity-30"
             typeof="text"
             size={65}
             id="textInp"
@@ -158,8 +168,8 @@ export default function ToDo() {
           ></input>
           {state.items.length > 0 ? filters : null}
         </div>
-        <div className="bg-black shadow-inner relative w-144 h-8 -top-16 z-10"></div>
-        <div className="bg-yellow shadow-inner relative w-128 h-8 -top-32 z-0"></div>
+        <div className="bg-white shadow-inner border border-gray border-opacity-25 relative w-144 h-1 -top-10 "></div>
+        <div className="bg-white shadow-inner border border-gray border-opacity-25 relative w-128 h-5 -top-20 z-0"></div>
       </div>
     </>
   );

@@ -2,6 +2,9 @@
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    important: true,
+    display: ["group-hover"],
+    visibility: ["group-hover"],
     screens: {
       sm: "480px",
       md: "768px",
@@ -12,25 +15,35 @@ module.exports = {
       white: "#ffffff",
       main: "#f5f5f5",
       black: "#000000",
-      pink: "#ff49db",
+      red: "#DC143C",
       h1: "rgba(175, 47, 47, 0.15)",
       grey: "#13ce66",
-      yellow: "#ffc82c",
+      green: "#50C878",
       "gray-dark": "#273444",
       gray: "#8492a6",
       "gray-light": "#d3dce6",
     },
     fontFamily: {
-      sans: ["Graphik", "sans-serif"],
+      sans: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },
     extend: {
       spacing: {
-        128: "36rem",
-        144: "36.5rem",
+        128: "612px",
+        144: "615px",
+      },
+      borderOpacity: {
+        10: "0.1",
+        20: "0.2",
+        50: "0.5",
+        75: "0.75",
+        95: "0.95",
       },
       borderRadius: {
         "4xl": "2rem",
+      },
+      height: {
+        5: "5px",
       },
     },
   },
