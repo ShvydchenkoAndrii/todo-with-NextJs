@@ -29,8 +29,8 @@ module.exports = {
     },
     extend: {
       spacing: {
-        128: "612px",
-        144: "615px",
+        128: "628px",
+        144: "630px",
       },
       borderOpacity: {
         10: "0.1",
@@ -44,6 +44,14 @@ module.exports = {
       },
       height: {
         5: "5px",
+      },
+      padding: {
+        6: "6px",
+        16: "16px",
+        64: "64px",
+      },
+      outlineWidth: {
+        1: "1px"
       },
     },
   },
