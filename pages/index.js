@@ -179,7 +179,7 @@ export default function ToDo() {
     <>
       <div className="flex flex-col items-center gap-10 py-5 font-sans">
         <div>
-          <h1 className="text-h1 text-8xl">ToDoList</h1>
+          <h1 className="text-h1 text-4xl lg:text-8xl md:text-6xl">ToDoList</h1>
         </div>
         <div className="bg-white shadow-lg border border-gray border-opacity-20">
           <div className="flex flex-row justify-center items-center">
@@ -196,9 +196,9 @@ export default function ToDo() {
               ▾
             </span>
             <input
-              className="placeholder:text-2xl placeholder:italic font-sans text-2xl py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30"
+              className="placeholder:text-2xl placeholder:italic font-sans text-2xl 
+              py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30 w-340 md:w-640"
               typeof="text"
-              size={42}
               id="textInp"
               ref={txtInput}
               placeholder="What needs to be done ?"
@@ -213,8 +213,8 @@ export default function ToDo() {
         </div>
         {state.items.length > 0 ? (
           <>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative w-144 h-1 -top-10 "></div>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative w-128 h-5 -top-20 z-0"></div>
+            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-144 w-400 h-1 -top-10 "></div>
+            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-128 w-390 h-5 -top-20 z-0"></div>
           </>
         ) : null}
       </div>
