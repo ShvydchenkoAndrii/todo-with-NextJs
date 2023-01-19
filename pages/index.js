@@ -80,34 +80,30 @@ export default function ToDo() {
     return (
       <div
         key={item.id}
-        className="border-t border-gray border-opacity-20  items-center "
+        className="border-t border-gray border-opacity-20  items-center"
       >
         <div className=" flex flex-row p-4 group/item justify-between">
           <div
-            className={
-              item.completed
-                ? "cursor-pointer h-8 w-8 border-green border border-opacity-50 rounded-full flex items-center justify-center"
-                : "cursor-pointer h-8 w-8 border-gray border border-opacity-50 rounded-full flex items-center justify-center"
-            }
+            className={`cursor-default h-8 w-8 ${
+              item.completed ? "border-green" : "border-gray"
+            }  border border-opacity-50 rounded-full flex items-center justify-center`}
             onClick={() => handletToggleCompleted(item.id)}
           >
             {item.completed ? <p className="text-green text-xl">✓</p> : null}
           </div>
           <p
-            className={
-              item.completed
-                ? "line-through absolute ml-16 opacity-20 duration-500 font-sans text-2xl"
-                : "absolute ml-16 duration-500 font-sans text-2xl"
-            }
+            className={`cursor-default absolute ml-16 ${
+              item.completed ? "opacity-20 line-through" : null
+            }  duration-500 font-sans text-2xl`}
           >
             {item.title}
           </p>
           <div className="group/edit invisible group-hover/item:visible">
             <span
-              className="cursor-pointer font-sans text-red opacity-50 text-xl pr-7 font-extrabold hover:opacity-100 hover:duration-500 duration-500"
+              className="cursor-default font-sans text-red opacity-50 text-3xl pr-2 hover:opacity-80 hover:duration-500 duration-500"
               onClick={() => handlerDeleteButt(item.id)}
             >
-              ✗
+              ×
             </span>
           </div>
         </div>
@@ -122,43 +118,43 @@ export default function ToDo() {
         <div className="opacity-60 cursor-default">
           {state.items.length} items
         </div>
-        <div className=" flex flex-row gap-5">
+        <div className=" flex flex-row gap-2">
           <div
-            className={
+            className={`cursor-pointer flex flex-row items-center justify-center ${
               state.filter === "all"
-                ? "cursor-pointer flex flex-row items-center justify-center outline outline-1 outline-red/20 px-2  text-sm font-sans rounded-md outline-opacity-20"
-                : "cursor-pointer hover:outline outline-1 outline-red/20 flex flex-row items-center justify-center px-2 text-sm font-sans rounded-md border-opacity-20"
-            }
+                ? "outline"
+                : "hover:outline hover:outline-red/10"
+            }  outline-1 outline-red/20 px-2  text-sm font-sans rounded-md`}
             onClick={() => handlerAllButt()}
           >
             <p className="opacity-60">All</p>
           </div>
           <div
-            className={
+            className={`cursor-pointer flex flex-row items-center justify-center ${
               state.filter === "Completed"
-                ? "cursor-pointer flex flex-row items-center justify-center outline outline-1 outline-red/20 px-2 text-sm font-sans rounded-md outline-opacity-20"
-                : "cursor-pointer hover:outline outline-1 outline-red/20 flex flex-row items-center justify-center  px-2 text-sm font-sans rounded-md border-opacity-20"
-            }
+                ? "outline"
+                : "hover:outline hover:outline-red/10"
+            }  outline-1 outline-red/20 px-2  text-sm font-sans rounded-md`}
             onClick={() => handlerCompletedButt()}
           >
             <p className="opacity-60">Completed</p>
           </div>
           <div
-            className={
+            className={`cursor-pointer flex flex-row items-center justify-center ${
               state.filter === "In progress"
-                ? "cursor-pointer flex flex-row items-center justify-center outline outline-1 outline-red/20 px-2 mx-1 text-sm font-sans rounded-md outline-opacity-20"
-                : "cursor-pointer hover:outline outline-1 outline-red/20 flex flex-row items-center justify-center  px-2 -mx-1.5 text-sm font-sans rounded-md border-opacity-20"
-            }
+                ? "outline"
+                : "hover:outline hover:outline-red/10"
+            }  outline-1 outline-red/20 px-2  text-sm font-sans rounded-md`}
             onClick={() => handlerInProgressButt()}
           >
             <p className="opacity-60">In progress</p>
           </div>
-          <div
-            onClick={() => handlerClearButt()}
-            className="text-sm hover:underline flex flex-row items-center justify-center"
-          >
-            <p className="opacity-60">Clear</p>
-          </div>
+        </div>
+        <div
+          onClick={() => handlerClearButt()}
+          className="text-sm hover:underline flex flex-row items-center justify-center"
+        >
+          <p className="opacity-60">Clear</p>
         </div>
       </div>
     </>
@@ -177,27 +173,27 @@ export default function ToDo() {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-10 py-5 font-sans">
+      <div className="flex flex-col justify-center items-center font-sans">
         <div>
-          <h1 className="text-h1 text-4xl lg:text-8xl md:text-6xl">ToDoList</h1>
+          <h1 className="text-h1 text-83 -mb-4">todos</h1>
         </div>
-        <div className="bg-white shadow-lg border border-gray border-opacity-20">
+        <div className="bg-white shadow-2xl border border-gray border-opacity-20">
           <div className="flex flex-row justify-center items-center">
             <span
-              className={
+              className={`static  ml-5 truncate text-2xl rotate-90 cursor-default ${
                 state.items.length === 0
-                  ? "static  ml-5 truncate text-4xl opacity-0"
+                  ? "opacity-0"
                   : allTrue
-                  ? "static ml-5 truncate text-4xl opacity-50"
-                  : "static ml-5 truncate text-4xl opacity-25"
-              }
+                  ? "opacity-50"
+                  : "opacity-25"
+              } `}
               onClick={() => handleAllToggled()}
             >
-              ▾
+              ❯
             </span>
             <input
               className="placeholder:text-2xl placeholder:italic font-sans text-2xl 
-              py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30 w-340 md:w-640"
+              py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30 w-340 md:w-500"
               typeof="text"
               id="textInp"
               ref={txtInput}
@@ -213,8 +209,8 @@ export default function ToDo() {
         </div>
         {state.items.length > 0 ? (
           <>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-144 w-400 h-1 -top-10 "></div>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-128 w-390 h-5 -top-20 z-0"></div>
+            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-144 w-400 h-1.5  "></div>
+            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-128 w-390 h-5 z-0"></div>
           </>
         ) : null}
       </div>

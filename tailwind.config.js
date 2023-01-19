@@ -15,7 +15,7 @@ module.exports = {
       white: "#ffffff",
       main: "#f5f5f5",
       black: "#000000",
-      red: "#DC143C",
+      red: "#800000",
       h1: "rgba(175, 47, 47, 0.15)",
       grey: "#13ce66",
       green: "#50C878",
@@ -30,12 +30,13 @@ module.exports = {
     extend: {
       spacing: {
         340: "340px",
-        390: "403px",
+        390: "399px",
         400: "404px",
-        128: "628px",
-        144: "629px",
-        640: "580px",
+        128: "517px",
+        144: "522px",
+        500: "500px",
       },
+      fontSize: { 83: "100px" },
       borderOpacity: {
         10: "0.1",
         20: "0.2",
