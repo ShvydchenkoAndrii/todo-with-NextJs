@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 
 export default function ToDo() {
   const [state, setState] = useState({ items: [], filter: "all" });
   const txtInput = useRef(null);
+
+  const counter = state.items.filter((item) => !item.completed).length;
 
   const handlerAddButt = () => {
     let inputTxt = txtInput.current.value;
@@ -29,6 +31,12 @@ export default function ToDo() {
     setState({ ...state, items: state.items });
   };
 
+  const handlerChangeTitle = (id) => {
+    const itemIdx = state.items.findIndex((item) => item.id === id);
+    state.items[itemIdx].title = "lol";
+    setState({ ...state, items: state.items });
+  };
+
   const handlerAllButt = () => {
     setState({ ...state, filter: "all" });
   };
@@ -39,8 +47,8 @@ export default function ToDo() {
     setState({ ...state, filter: "In progress" });
   };
   const handlerClearButt = () => {
-    setState({ items: [], filter: "all" });
-    localStorage.clear();
+    const filtered = state.items.filter((item) => !item.completed);
+    setState({ ...state, items: filtered });
   };
 
   const handleAllToggled = () => {
@@ -72,9 +80,7 @@ export default function ToDo() {
     }
   });
 
-  const allTrue = Object.values(state.items).every(
-    (item) => item.completed === true
-  );
+  const allTrue = Object.values(state.items).every((item) => item.completed);
 
   const list = filterResult.map((item) => {
     return (
@@ -82,7 +88,7 @@ export default function ToDo() {
         key={item.id}
         className="border-t border-gray border-opacity-20  items-center"
       >
-        <div className=" flex flex-row p-4 group/item justify-between">
+        <div className=" flex flex-row p-3 group/item justify-between">
           <div
             className={`cursor-default h-8 w-8 ${
               item.completed ? "border-green" : "border-gray"
@@ -92,9 +98,10 @@ export default function ToDo() {
             {item.completed ? <p className="text-green text-xl">✓</p> : null}
           </div>
           <p
-            className={`cursor-default absolute ml-16 ${
-              item.completed ? "opacity-20 line-through" : null
-            }  duration-500 font-sans text-2xl`}
+            className={`cursor-default absolute ml-14 opacity-70 duration-500 font-sans text-2xl ${
+              item.completed === true ? "opacity-30 line-through" : null
+            }  `}
+            onDoubleClick={() => handlerChangeTitle(item.id)}
           >
             {item.title}
           </p>
@@ -114,10 +121,8 @@ export default function ToDo() {
   const filters = (
     <>
       <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
-      <div className="flex flex-row gap-10 shadow-sm border-t border-gray border-opacity-20 font-sans pl-16 p-4 justify-between">
-        <div className="opacity-60 cursor-default">
-          {state.items.length} items
-        </div>
+      <div className="flex flex-row gap-4 shadow-sm border-t border-gray border-opacity-20 font-sans pl-16 p-4 justify-between">
+        <div className="opacity-60 cursor-default">{counter} items</div>
         <div className=" flex flex-row gap-2">
           <div
             className={`cursor-pointer flex flex-row items-center justify-center ${
@@ -152,9 +157,12 @@ export default function ToDo() {
         </div>
         <div
           onClick={() => handlerClearButt()}
-          className="text-sm hover:underline flex flex-row items-center justify-center"
+          className={`text-sm hover:underline flex flex-row items-center justify-center ${
+            counter < state.items.length ? "opacity-100" : "opacity-0"
+          }
+          `}
         >
-          <p className="opacity-60">Clear</p>
+          <p className="opacity-60">Clear completed</p>
         </div>
       </div>
     </>
@@ -180,7 +188,7 @@ export default function ToDo() {
         <div className="bg-white shadow-2xl border border-gray border-opacity-20 ">
           <div className="flex flex-row justify-between items-center">
             <span
-              className={`block ml-7 truncate text-2xl rotate-90 cursor-default ${
+              className={`block ml-7 truncate text-2xl rotate-90 cursor-default z-10 ${
                 state.items.length === 0
                   ? "opacity-0"
                   : allTrue
@@ -195,7 +203,7 @@ export default function ToDo() {
               className={`${
                 state.items.length === 0 ? "" : null
               } placeholder:text-2xl placeholder:italic font-sans text-2xl 
-              py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30 w-390  md:w-500`}
+              py-16 pr-16 pl-4 focus:outline-0 font-normal opacity-70 placeholder:opacity-30 w-390  md:w-500`}
               typeof="text"
               id="textInp"
               ref={txtInput}
