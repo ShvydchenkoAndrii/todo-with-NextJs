@@ -177,10 +177,10 @@ export default function ToDo() {
         <div>
           <h1 className="text-h1 text-83 -mb-4">todos</h1>
         </div>
-        <div className="bg-white shadow-2xl border border-gray border-opacity-20">
-          <div className="flex flex-row justify-center items-center">
+        <div className="bg-white shadow-2xl border border-gray border-opacity-20 ">
+          <div className="flex flex-row justify-between items-center">
             <span
-              className={`static  ml-5 truncate text-2xl rotate-90 cursor-default ${
+              className={`block ml-7 truncate text-2xl rotate-90 cursor-default ${
                 state.items.length === 0
                   ? "opacity-0"
                   : allTrue
@@ -192,8 +192,10 @@ export default function ToDo() {
               ❯
             </span>
             <input
-              className="placeholder:text-2xl placeholder:italic font-sans text-2xl 
-              py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30 w-340 md:w-500"
+              className={`${
+                state.items.length === 0 ? "" : null
+              } placeholder:text-2xl placeholder:italic font-sans text-2xl 
+              py-16 pr-16 pl-5 focus:outline-0 font-normal placeholder:opacity-30 w-390  md:w-500`}
               typeof="text"
               id="textInp"
               ref={txtInput}
@@ -209,8 +211,8 @@ export default function ToDo() {
         </div>
         {state.items.length > 0 ? (
           <>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-144 w-400 h-1.5  "></div>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-128 w-390 h-5 z-0"></div>
+            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-144 w-429 h-1.5  "></div>
+            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-128 w-424 h-5 z-0"></div>
           </>
         ) : null}
       </div>
