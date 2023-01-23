@@ -3,7 +3,7 @@ import { use, useEffect, useRef, useState } from "react";
 export default function ToDo() {
   const [state, setState] = useState({ items: [], filter: "all" });
   const txtInput = useRef(null);
-  const changeInput = useRef(null)
+  const changeInput = useRef(null);
 
   const counter = state.items.filter((item) => !item.completed).length;
 
@@ -44,6 +44,9 @@ export default function ToDo() {
     const itemIdx = state.items.findIndex((item) => item.id === id);
     state.items[itemIdx].change = !state.items[itemIdx].change;
     state.items[itemIdx].title = inputTxt;
+    if (inputTxt === "") {
+      state.items.splice(itemIdx, 1);
+    }
     setState({ ...state, items: state.items });
   };
 
@@ -129,6 +132,7 @@ export default function ToDo() {
                     handleChangeTitle(item.id);
                   }
                 }}
+                onBlur={() => handleChangeTitle(item.id)}
               ></input>
             )}
           </div>
