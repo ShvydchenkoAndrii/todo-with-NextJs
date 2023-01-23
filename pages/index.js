@@ -3,6 +3,7 @@ import { use, useEffect, useRef, useState } from "react";
 export default function ToDo() {
   const [state, setState] = useState({ items: [], filter: "all" });
   const txtInput = useRef(null);
+  const changeInput = useRef(null)
 
   const counter = state.items.filter((item) => !item.completed).length;
 
@@ -11,6 +12,7 @@ export default function ToDo() {
     const newItem = {
       title: inputTxt,
       completed: false,
+      change: false,
       id: Math.ceil(Math.random() * 1000),
     };
     if (newItem.title !== "") {
@@ -31,9 +33,17 @@ export default function ToDo() {
     setState({ ...state, items: state.items });
   };
 
-  const handlerChangeTitle = (id) => {
+  const handlerChange = (id) => {
     const itemIdx = state.items.findIndex((item) => item.id === id);
-    state.items[itemIdx].title = "lol";
+    state.items[itemIdx].change = !state.items[itemIdx].change;
+    setState({ ...state, items: state.items });
+  };
+
+  const handleChangeTitle = (id) => {
+    let inputTxt = changeInput.current.value;
+    const itemIdx = state.items.findIndex((item) => item.id === id);
+    state.items[itemIdx].change = !state.items[itemIdx].change;
+    state.items[itemIdx].title = inputTxt;
     setState({ ...state, items: state.items });
   };
 
@@ -90,24 +100,43 @@ export default function ToDo() {
       >
         <div className=" flex flex-row p-3 group/item justify-between">
           <div
-            className={`cursor-default h-8 w-8 ${
+            className={`${
+              item.change ? "invisible" : "visible"
+            } cursor-default h-8 w-8 ${
               item.completed ? "border-green" : "border-gray"
             }  border border-opacity-50 rounded-full flex items-center justify-center`}
             onClick={() => handletToggleCompleted(item.id)}
           >
             {item.completed ? <p className="text-green text-xl">✓</p> : null}
           </div>
-          <p
+          <div
             className={`cursor-default absolute ml-14 opacity-70 duration-500 font-sans text-2xl ${
-              item.completed === true ? "opacity-30 line-through" : null
+              item.completed ? "opacity-30 line-through" : null
             }  `}
-            onDoubleClick={() => handlerChangeTitle(item.id)}
+            onDoubleClick={() => handlerChange(item.id)}
           >
-            {item.title}
-          </p>
+            {!item.change ? (
+              <p>{item.title}</p>
+            ) : (
+              <input
+                className="p-3 pb-4 pr-110 md:pr-200 absolute -top-3 -left-3"
+                type="text"
+                ref={changeInput}
+                defaultValue={item.title}
+                autoFocus
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleChangeTitle(item.id);
+                  }
+                }}
+              ></input>
+            )}
+          </div>
           <div className="group/edit invisible group-hover/item:visible">
             <span
-              className="cursor-default font-sans text-red opacity-50 text-3xl pr-2 hover:opacity-80 hover:duration-500 duration-500"
+              className={`${
+                item.change ? "invisible" : null
+              } cursor-default font-sans text-red opacity-50 text-3xl pr-2 hover:opacity-80 hover:duration-500 duration-500`}
               onClick={() => handlerDeleteButt(item.id)}
             >
               ×
