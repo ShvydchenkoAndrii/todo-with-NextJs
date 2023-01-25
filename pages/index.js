@@ -99,21 +99,39 @@ export default function ToDo() {
     return (
       <div
         key={item.id}
-        className="border-t border-gray border-opacity-20  items-center"
+        className="border-t border-gray border-opacity-20 items-center h-[58.79px] "
       >
-        <div className=" flex flex-row p-3 group/item justify-between">
+        <div className=" flex flex-row p-[11.6px] pb-[12px] pl-[8px] mt-[1px] group/item justify-between">
           <div
             className={`${
               item.change ? "invisible" : "visible"
-            } cursor-default h-8 w-8 ${
-              item.completed ? "border-green" : "border-gray"
-            }  border border-opacity-50 rounded-full flex items-center justify-center`}
+            } cursor-default h-[30px] w-[30px] ${
+              item.completed ? "border-green" : "border-gray-light"
+            } relative mt-[2px] border border-opacity-100 rounded-full flex items-center justify-center`}
             onClick={() => handletToggleCompleted(item.id)}
           >
-            {item.completed ? <p className="text-green text-xl">✓</p> : null}
+            {/* {item.completed ? <p className="text-green text-xl">✓</p> : null} */}
+            {item.completed ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="-10 -18 100 135"
+              >
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="50"
+                  fill="none"
+                  stroke="#bddad5"
+                  stroke-width="3"
+                />
+                <path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z" />
+              </svg>
+            ) : null}
           </div>
           <div
-            className={`cursor-default absolute ml-14 opacity-70 duration-500 font-sans text-2xl ${
+            className={`cursor-default absolute ml-[52px] mt-[1px] font-text opacity-70 duration-500 font-sans text-2xl ${
               item.completed ? "opacity-30 line-through" : null
             }  `}
             onDoubleClick={() => handlerChange(item.id)}
@@ -136,11 +154,11 @@ export default function ToDo() {
               ></input>
             )}
           </div>
-          <div className="group/edit invisible group-hover/item:visible">
+          <div className="group/edit invisible relative group-hover/item:visible">
             <span
               className={`${
                 item.change ? "invisible" : null
-              } cursor-default font-sans text-red opacity-50 text-3xl pr-2 hover:opacity-80 hover:duration-500 duration-500`}
+              } cursor-default font-sans text-red opacity-40 text-3xl pr-2 hover:opacity-80 hover:duration-500 duration-500`}
               onClick={() => handlerDeleteButt(item.id)}
             >
               ×
@@ -152,45 +170,47 @@ export default function ToDo() {
   });
 
   const filters = (
-    <>
+    <div className="shadow-sl">
       <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
-      <div className="flex flex-row gap-4 shadow-sm border-t border-gray border-opacity-20 font-sans pl-16 p-4 justify-between">
-        <div className="opacity-60 cursor-default">{counter} items</div>
-        <div className=" flex flex-row gap-2">
+      <div className="flex justify-between border-t border-gray-light border-opacity-100 font-sans pb-[9px] pt-[10px] pl-[15px]">
+        <div className="opacity-60 cursor-default text-sm">
+          {counter} item left
+        </div>
+        <div className=" flex gap-3 ml-[30px]">
           <div
-            className={`cursor-pointer flex flex-row items-center justify-center ${
+            className={`cursor-pointer flex items-center  ${
               state.filter === "all"
                 ? "outline"
                 : "hover:outline hover:outline-red/10"
-            }  outline-1 outline-red/20 px-2  text-sm font-sans rounded-md`}
+            }  outline-1 outline-red/20 text-sm font-sans rounded-sm`}
             onClick={() => handlerAllButt()}
           >
-            <p className="opacity-60">All</p>
+            <p className="opacity-60 px-[7px] py-[1px]">All</p>
           </div>
           <div
             className={`cursor-pointer flex flex-row items-center justify-center ${
               state.filter === "Completed"
                 ? "outline"
                 : "hover:outline hover:outline-red/10"
-            }  outline-1 outline-red/20 px-2  text-sm font-sans rounded-md`}
+            }  outline-1 outline-red/20   text-sm font-sans rounded-sm`}
             onClick={() => handlerCompletedButt()}
           >
-            <p className="opacity-60">Completed</p>
+            <p className="opacity-60 px-[7px] py-[1px]">Active</p>
           </div>
           <div
             className={`cursor-pointer flex flex-row items-center justify-center ${
               state.filter === "In progress"
                 ? "outline"
                 : "hover:outline hover:outline-red/10"
-            }  outline-1 outline-red/20 px-2  text-sm font-sans rounded-md`}
+            }  outline-1 outline-red/20 text-sm font-sans rounded-sm`}
             onClick={() => handlerInProgressButt()}
           >
-            <p className="opacity-60">In progress</p>
+            <p className="opacity-60 px-[7px] py-[1px]">Completed</p>
           </div>
         </div>
         <div
           onClick={() => handlerClearButt()}
-          className={`text-sm hover:underline flex flex-row items-center justify-center ${
+          className={`text-sm hover:underline items-center justify-center ${
             counter < state.items.length ? "opacity-100" : "opacity-0"
           }
           `}
@@ -198,7 +218,7 @@ export default function ToDo() {
           <p className="opacity-60">Clear completed</p>
         </div>
       </div>
-    </>
+    </div>
   );
 
   useEffect(() => {
@@ -214,33 +234,33 @@ export default function ToDo() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center font-sans">
-        <div>
-          <h1 className="text-h1 text-83 -mb-4">todos</h1>
-        </div>
-        <div className="bg-white shadow-2xl border border-gray border-opacity-20 ">
-          <div className="flex flex-row justify-between items-center">
-            <span
-              className={`block ml-7 truncate text-2xl rotate-90 cursor-default z-10 ${
+      <div className="flex flex-col justify-center items-center mt-[1px]">
+        <h1 className="text-h1 text-83 -mb-4 -mt-2 w-550 text-center font-sans">
+          todos
+        </h1>
+        <div className="bg-white border border-gray border-opacity-20 mt-[3px] shadow-xl  border-none">
+          <div className="flex flex-row justify-between items-center relative z-0">
+            <div
+              className={`font-semibold absolute left-[20px] top-[17px] text-[22px] rotate-90 cursor-default z-10 ${
                 state.items.length === 0
                   ? "opacity-0"
                   : allTrue
-                  ? "opacity-50"
-                  : "opacity-25"
+                  ? "opacity-60"
+                  : "opacity-10"
               } `}
               onClick={() => handleAllToggled()}
             >
               ❯
-            </span>
+            </div>
             <input
               className={`${
                 state.items.length === 0 ? "" : null
-              } placeholder:text-2xl placeholder:italic font-sans text-2xl 
-              py-16 pr-16 pl-4 focus:outline-0 font-normal opacity-70 placeholder:opacity-30 w-390  md:w-500`}
+              } placeholder:text-2xl placeholder:italic font-sans text-2xl shadow-inp bg-input
+              py-16 pr-16 pl-60 focus:outline-0 opacity-70 placeholder:opacity-40 w-390 md:h-[65.6px]  md:w-550`}
               typeof="text"
               id="textInp"
               ref={txtInput}
-              placeholder="What needs to be done ?"
+              placeholder="What needs to be done?"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   handlerAddButt();
@@ -250,12 +270,6 @@ export default function ToDo() {
           </div>
           {state.items.length > 0 ? filters : null}
         </div>
-        {state.items.length > 0 ? (
-          <>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-144 w-429 h-1.5  "></div>
-            <div className="bg-white shadow-inner border border-gray border-opacity-25 relative md:w-128 w-424 h-5 z-0"></div>
-          </>
-        ) : null}
       </div>
     </>
   );
