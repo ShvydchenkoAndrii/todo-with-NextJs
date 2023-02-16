@@ -1,4 +1,4 @@
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ToDo() {
   const [state, setState] = useState({ items: [], filter: "all" });
@@ -105,34 +105,15 @@ export default function ToDo() {
           <div
             className={`${
               item.change ? "invisible" : "visible"
-            } cursor-default h-[30px] w-[30px] ${
-              item.completed ? "border-green" : "border-gray-light"
+            } cursor-default h-[30px] w-[30px] border-gray-light
             } relative mt-[2px] border border-opacity-100 rounded-full flex items-center justify-center`}
             onClick={() => handletToggleCompleted(item.id)}
           >
-            {/* {item.completed ? <p className="text-green text-xl">✓</p> : null} */}
-            {item.completed ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="-10 -18 100 135"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r="50"
-                  fill="none"
-                  stroke="#bddad5"
-                  stroke-width="3"
-                />
-                <path fill="#5dc2af" d="M72 25L42 71 27 56l-4 4 20 20 34-52z" />
-              </svg>
-            ) : null}
+            {item.completed ? <p className="text-green text-xl">✓</p> : null}
           </div>
           <div
             className={`cursor-default absolute ml-[52px] mt-[1px] font-text opacity-70 duration-500 font-sans text-2xl ${
-              item.completed ? "opacity-30 line-through" : null
+              (item.completed && !item.change) ? "opacity-20 line-through" : null
             }  `}
             onDoubleClick={() => handlerChange(item.id)}
           >
@@ -140,8 +121,8 @@ export default function ToDo() {
               <p>{item.title}</p>
             ) : (
               <input
-                className="p-3 pb-4 pr-110 md:pr-200 absolute -top-3 -left-3"
-                type="text"
+                className="p-[13px] pb-3 pr-110 md:pr-200 absolute -top-[14px] -left-[15px] focus:border shadow-editInp focus:outline-none"
+                type="edit"
                 ref={changeInput}
                 defaultValue={item.title}
                 autoFocus
@@ -174,7 +155,7 @@ export default function ToDo() {
       <div>{state.items.length !== 0 ? <ul>{list}</ul> : null}</div>
       <div className="flex justify-between border-t border-gray-light border-opacity-100 font-sans pb-[9px] pt-[10px] pl-[15px]">
         <div className="opacity-60 cursor-default text-sm">
-          {counter} item left
+          {counter} {counter !== 1 ? "items left" : "item left"}
         </div>
         <div className=" flex gap-3 ml-[30px]">
           <div
@@ -189,28 +170,28 @@ export default function ToDo() {
           </div>
           <div
             className={`cursor-pointer flex flex-row items-center justify-center ${
-              state.filter === "Completed"
+              state.filter === "In progress"
                 ? "outline"
                 : "hover:outline hover:outline-red/10"
             }  outline-1 outline-red/20   text-sm font-sans rounded-sm`}
-            onClick={() => handlerCompletedButt()}
+            onClick={() => handlerInProgressButt()}
           >
             <p className="opacity-60 px-[7px] py-[1px]">Active</p>
           </div>
           <div
             className={`cursor-pointer flex flex-row items-center justify-center ${
-              state.filter === "In progress"
+              state.filter === "Completed"
                 ? "outline"
                 : "hover:outline hover:outline-red/10"
             }  outline-1 outline-red/20 text-sm font-sans rounded-sm`}
-            onClick={() => handlerInProgressButt()}
+            onClick={() => handlerCompletedButt()}
           >
-            <p className="opacity-60 px-[7px] py-[1px]">Completed</p>
+            <p className="opacity-60 px-[7px]">Completed</p>
           </div>
         </div>
         <div
           onClick={() => handlerClearButt()}
-          className={`text-sm hover:underline items-center justify-center ${
+          className={`text-sm hover:underline items-center justify-center mr-4 ${
             counter < state.items.length ? "opacity-100" : "opacity-0"
           }
           `}
