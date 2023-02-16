@@ -56,8 +56,8 @@ export default function ToDo() {
   const handlerCompletedButt = () => {
     setState({ ...state, filter: "Completed" });
   };
-  const handlerInProgressButt = () => {
-    setState({ ...state, filter: "In progress" });
+  const handlerActiveButt = () => {
+    setState({ ...state, filter: "Active" });
   };
   const handlerClearButt = () => {
     const filtered = state.items.filter((item) => !item.completed);
@@ -88,7 +88,7 @@ export default function ToDo() {
     if (state.filter === "Completed") {
       return item.completed === true;
     }
-    if (state.filter === "In progress") {
+    if (state.filter === "Active") {
       return item.completed === false;
     }
   });
@@ -170,11 +170,11 @@ export default function ToDo() {
           </div>
           <div
             className={`cursor-pointer flex flex-row items-center justify-center ${
-              state.filter === "In progress"
+              state.filter === "Active"
                 ? "outline"
                 : "hover:outline hover:outline-red/10"
             }  outline-1 outline-red/20   text-sm font-sans rounded-sm`}
-            onClick={() => handlerInProgressButt()}
+            onClick={() => handlerActiveButt()}
           >
             <p className="opacity-60 px-[7px] py-[1px]">Active</p>
           </div>
